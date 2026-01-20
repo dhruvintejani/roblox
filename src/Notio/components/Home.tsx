@@ -1,33 +1,6 @@
 import { useState } from "react";
-import image_1 from "../../assets/Notio/n-1.jpg";
-import image_2 from "../../assets/Notio/n-2.jpg";
-import image_3 from "../../assets/Notio/n-3.jpg";
-import image_4 from "../../assets/Notio/n-4.jpg";
-import image_5 from "../../assets/Notio/n-5.jpg";
-import image_6 from "../../assets/Notio/n-6.jpg";
-import image_7 from "../../assets/Notio/n-7.jpg";
-import image_8 from "../../assets/Notio/n-8.jpg";
-import image_9 from "../../assets/Notio/n-9.jpg";
-import image_10 from "../../assets/Notio/n-10.jpg";
 import { Link } from "react-router-dom";
-
-const images = [
-  { src: image_1, title: "Button Badge", category: "Branding" },
-  { src: image_5, title: "Bicycle", category: "Illustration" },
-  { src: image_8, title: "Creative", category: "Design" },
-  { src: image_2, title: "Beer Bottle", height: "200px", category: "Mockup" },
-  { src: image_9, title: "Character Art", category: "Artwork" },
-  { src: image_3, title: "Wooden Pencils", category: "Stationery" },
-  { src: image_6, title: "Free Lancelot", category: "Web" },
-  { src: image_10, title: "Packaging", category: "Mockup" },
-  { src: image_4, title: "Mountain Logo", category: "Branding" },
-  {
-    src: image_7,
-    title: "Minimal Design",
-    height: "200px",
-    category: "Branding",
-  },
-];
+import { images } from "../../assets/data/Notio/dummydata";
 
 const Home = () => {
   const [mode, setMode] = useState(false);
@@ -55,7 +28,7 @@ const Home = () => {
         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4">
           {!mode && (
             <p
-              className="flex justify-between bg-black bg-opacity-40 p-4 hover:bg-opacity-100 cursor-pointer fixed text-white font-bold z-30"
+              className="flex mt-2 justify-between bg-black bg-opacity-40 p-4 hover:bg-opacity-100 cursor-pointer fixed text-white font-bold z-30"
               onClick={() => setMode(true)}
             >
               FILTERS

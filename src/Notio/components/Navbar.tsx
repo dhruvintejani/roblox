@@ -1,11 +1,11 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import Facebook_img from "../../assets/Group (6).png";
-import TIktok_img from "../../assets/Group (7).png";
-import Youtube_img from "../../assets/Group (8).png";
-import Twitter_img from "../../assets/Group (9).png";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import Facebook_img from "../../assets/images/Group (6).png";
+import TIktok_img from "../../assets/images/Group (7).png";
+import Youtube_img from "../../assets/images/Group (8).png";
+import Twitter_img from "../../assets/images/Group (9).png";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import image from "../../assets/User.jpg";
+import image from "../../assets/images/User.jpg";
 import { Popover, IconButton } from "@mui/material";
 
 const Navbar = () => {
@@ -13,6 +13,11 @@ const Navbar = () => {
   const [openModal, setOpenModal] = useState<HTMLElement | null>(null);
   const [mobileMenu, setMobileMenu] = useState(false);
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const hideFooterRoutes = ["/my_chatbox", "/shorts"];
+  const hideFooter = hideFooterRoutes.includes(location.pathname);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -36,6 +41,10 @@ const Navbar = () => {
           <nav className="hidden md:flex items-center gap-6 lg:gap-10 font-semibold">
             <NavLink to="/" className={activeClass}>
               HOME
+            </NavLink>
+
+            <NavLink to="/shorts" className={activeClass}>
+              SHORTS
             </NavLink>
 
             {user && (
@@ -86,10 +95,7 @@ const Navbar = () => {
         {mobileMenu && (
           <div className="md:hidden fixed inset-0 bg-black/40 z-50">
             <div className="absolute right-0 top-0 h-full w-64 bg-white p-6 flex flex-col gap-6 font-semibold">
-              <button
-                className="self-end"
-                onClick={() => setMobileMenu(false)}
-              >
+              <button className="self-end" onClick={() => setMobileMenu(false)}>
                 <Icon icon="mdi:close" width={24} />
               </button>
 
@@ -145,12 +151,14 @@ const Navbar = () => {
         <Outlet />
       </main>
 
-      <footer className="flex flex-wrap justify-center my-6 gap-4 px-4">
-        <img className="hover:scale-110 transition" src={Facebook_img} />
-        <img className="hover:scale-110 transition" src={Twitter_img} />
-        <img className="hover:scale-110 transition" src={TIktok_img} />
-        <img className="hover:scale-110 transition" src={Youtube_img} />
-      </footer>
+      {!hideFooter && (
+        <footer className="flex flex-wrap justify-center my-6 gap-4 px-4">
+          <img className="hover:scale-110 transition" src={Facebook_img} />
+          <img className="hover:scale-110 transition" src={Twitter_img} />
+          <img className="hover:scale-110 transition" src={TIktok_img} />
+          <img className="hover:scale-110 transition" src={Youtube_img} />
+        </footer>
+      )}
 
       <Popover
         open={open}

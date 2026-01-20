@@ -2,21 +2,7 @@ import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-interface CartItem {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-}
-
-interface CartContextType {
-  cart: CartItem[];
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (id: number) => void;
-  cartOpen: boolean;
-  setCartOpen: (v: boolean) => void;
-}
+import type { CartContextType, CartItem } from "../interface/ICartContext";
 
 const CartContext = createContext<CartContextType | null>(null);
 

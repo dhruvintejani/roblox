@@ -1,148 +1,16 @@
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import image from "../../assets/Roblox/Logo.png";
+import image from "../../assets/images/Roblox/Logo.png";
 import { Modal } from "@mui/material";
 import { useCart } from "../context/CartContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { dummyCategories, topics } from "../../assets/data/Roblox/dummydata";
 
-interface Subcategory {
-  subcategory?: string | null;
-  taxonomy: string;
-  assetTypeIds: number[];
-  bundleTypeIds: number[];
-  subcategoryId?: number | null;
-  name: string;
-  shortName?: string | null;
-}
+const SALES_TYPES = ["All", "Limited"] as const;
+type SalesType = (typeof SALES_TYPES)[number];
 
-interface Category {
-  category: string;
-  taxonomy: string;
-  assetTypeIds: number[];
-  bundleTypeIds: number[];
-  categoryId: number;
-  name: string;
-  orderIndex: number;
-  subcategories: Subcategory[];
-  isSearchable: boolean;
-}
-
-interface Topic {
-  displayName: string;
-  originalTopicName: string;
-}
-
-export const dummyCategories: Category[] = [
-  {
-    category: "All",
-    taxonomy: "tZsUsd2BqGViQrJ9Vs3Wah",
-    assetTypeIds: [
-      11, 2, 12, 17, 18, 19, 8, 41, 42, 43, 44, 45, 46, 47, 61, 64, 65, 68, 67,
-      66, 69, 72, 51,
-    ],
-    bundleTypeIds: [1, 2, 3, 4],
-    categoryId: 1,
-    name: "All",
-    orderIndex: 1,
-    subcategories: [],
-    isSearchable: true,
-  },
-  {
-    category: "Body",
-    taxonomy: "mwkR3QvDBVzYk4o9RAVVa2",
-    assetTypeIds: [41, 17, 18],
-    bundleTypeIds: [4, 1],
-    categoryId: 18,
-    name: "Body",
-    orderIndex: 2,
-    subcategories: [
-      {
-        subcategory: "BodyPartsBundles",
-        taxonomy: "kfHzJwaNYM8s2CWRqYUhRa",
-        assetTypeIds: [],
-        bundleTypeIds: [1],
-        subcategoryId: 37,
-        name: "Full Bodies",
-        shortName: null,
-      },
-      {
-        subcategory: "HairAccessories",
-        taxonomy: "d6a7M7r9MMrpf7z7VxW9ZS",
-        assetTypeIds: [41],
-        bundleTypeIds: [],
-        subcategoryId: 20,
-        name: "Hair",
-        shortName: null,
-      },
-    ],
-    isSearchable: true,
-  },
-  {
-    category: "Clothing",
-    taxonomy: "5G3bZScC9Hxp2D2EUtGSNm",
-    assetTypeIds: [11, 2, 12, 64, 65, 68, 67, 66, 69, 72],
-    bundleTypeIds: [3],
-    categoryId: 3,
-    name: "Clothing",
-    orderIndex: 3,
-    subcategories: [
-      {
-        subcategory: "TShirtAccessories",
-        taxonomy: "fLRqNzGqjX7MzcqeMro9hc",
-        assetTypeIds: [64],
-        bundleTypeIds: [],
-        subcategoryId: 58,
-        name: "T-Shirts",
-        shortName: null,
-      },
-    ],
-    isSearchable: true,
-  },
-];
-
-const topics: Topic[] = [
-  { displayName: "whimsical", originalTopicName: "" },
-  { displayName: "cute", originalTopicName: "" },
-  { displayName: "ninja", originalTopicName: "" },
-  { displayName: "style", originalTopicName: "" },
-  { displayName: "martial arts", originalTopicName: "" },
-  { displayName: "hip", originalTopicName: "" },
-  { displayName: "trendy", originalTopicName: "" },
-  { displayName: "stylish", originalTopicName: "" },
-  { displayName: "head", originalTopicName: "" },
-  { displayName: "bundle", originalTopicName: "" },
-  { displayName: "futuristic", originalTopicName: "" },
-  { displayName: "scifi", originalTopicName: "" },
-  { displayName: "robot", originalTopicName: "" },
-  { displayName: "sweet", originalTopicName: "" },
-  { displayName: "weapon", originalTopicName: "" },
-  { displayName: "ranged", originalTopicName: "" },
-  { displayName: "metal", originalTopicName: "" },
-  { displayName: "steven", originalTopicName: "steven" },
-  { displayName: "emotes", originalTopicName: "emotes" },
-  { displayName: "cheeks", originalTopicName: "cheeks" },
-  { displayName: "scarf", originalTopicName: "scarf" },
-  { displayName: "nails", originalTopicName: "nails" },
-  { displayName: "beard", originalTopicName: "beard" },
-  { displayName: "fang", originalTopicName: "fang" },
-  { displayName: "ushanka", originalTopicName: "ushanka" },
-  { displayName: "fedora", originalTopicName: "fedora" },
-  { displayName: "scene", originalTopicName: "scene" },
-  { displayName: "necklace", originalTopicName: "necklace" },
-  { displayName: "slippers", originalTopicName: "slippers" },
-  { displayName: "mouthless", originalTopicName: "mouthless" },
-  { displayName: "eyepatch", originalTopicName: "eyepatch" },
-  { displayName: "mustache", originalTopicName: "mustache" },
-  { displayName: "earmuffs", originalTopicName: "earmuffs" },
-  { displayName: "keffiyeh", originalTopicName: "keffiyeh" },
-  { displayName: "initial", originalTopicName: "initial" },
-  { displayName: "blindfold", originalTopicName: "blindfold" },
-  { displayName: "pose", originalTopicName: "pose" },
-  { displayName: "wings", originalTopicName: "wings" },
-  { displayName: "fursuit", originalTopicName: "fursuit" },
-];
 export default function Navbar() {
   const [open, setOpen] = useState(null);
   const [category, setCategory] = useState("All");
@@ -152,29 +20,37 @@ export default function Navbar() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [sortBy, setSortBy] = useState("Relevance");
-  const [salesType, setSalesType] = useState("All");
   const [unavailable, setUnavailable] = useState("Hide");
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
+    null
+  );
   const [tempCategory, setTempCategory] = useState(category);
-  const [tempSubcategory, setTempSubcategory] = useState<string | null>(selectedSubcategory);
+  const [tempSubcategory, setTempSubcategory] = useState<string | null>(
+    selectedSubcategory
+  );
   const [tempCreatorMode, setTempCreatorMode] = useState(creatorMode);
   const [tempCreatorName, setTempCreatorName] = useState(creatorName);
   const [tempPriceMode, setTempPriceMode] = useState(priceMode);
   const [tempMinPrice, setTempMinPrice] = useState(minPrice);
   const [tempMaxPrice, setTempMaxPrice] = useState(maxPrice);
   const [tempSortBy, setTempSortBy] = useState(sortBy);
-  const [tempSalesType, setTempSalesType] = useState(salesType);
+  const [salesType, setSalesType] = useState<SalesType>("All");
+  const [tempSalesType, setTempSalesType] = useState<SalesType>("All");
+
   const [tempUnavailable, setTempUnavailable] = useState(unavailable);
   const [cartOpen, setCartOpen] = useState(false);
   const isCategoryActive = category !== "All";
-  const isCreatorActive = creatorMode === "Creator Name" && creatorName.trim() !== "";
-  const isPriceActive = priceMode === "Custom" && (minPrice !== "" || maxPrice !== "");
+  const isCreatorActive =
+    creatorMode === "Creator Name" && creatorName.trim() !== "";
+  const isPriceActive =
+    priceMode === "Custom" && (minPrice !== "" || maxPrice !== "");
   const isSortActive = sortBy !== "Relevance";
   const isSalesActive = salesType !== "All";
   const isUnavailableActive = unavailable !== "Hide";
   const { cart, removeFromCart } = useCart();
+  const salesLabel = salesType === "Limited" ? "Limited" : "Sales Type";
 
   const toggleTopic = (topic: string) => {
     setSelectedTopics((prev) =>
@@ -211,6 +87,9 @@ export default function Navbar() {
   };
 
   const toggle = (key: any) => {
+    if (key === "sales" && open !== "sales") {
+      setTempSalesType(salesType);
+    }
     setOpen(open === key ? null : key);
   };
 
@@ -240,9 +119,9 @@ export default function Navbar() {
           </div>
 
           <div className="ml-[340px] flex text-[18px] gap-3">
-           <button className="inline-flex justify-center text-white rounded-xl px-3 py-1 bg-blue-600 font-medium hover:bg-blue-700">
-             Sign Up
-           </button>
+            <button className="inline-flex justify-center text-white rounded-xl px-3 py-1 bg-blue-600 font-medium hover:bg-blue-700">
+              Sign Up
+            </button>
 
             <button className="border border-gray-700 text-gray-700 px-3 py-1 rounded-xl hover:text-black">
               Log In
@@ -1061,16 +940,12 @@ export default function Navbar() {
                     }}
                     className="flex items-center gap-3"
                   >
-                    <span className="text-[20px]">
-                      {salesType === "Limited" ? "Limited" : "Sales Type"}
-                    </span>
+                    <span className="text-[20px]">{salesLabel}</span>
                     <span className="text-2xl">✕</span>
                   </span>
                 ) : (
                   <>
-                    <span className="text-[20px]">
-                      {salesType === "Limited" ? "Limited" : "Sales Type"}
-                    </span>
+                    <span className="text-[20px]">{salesLabel}</span>
                     <Icon icon="mdi:chevron-down" className="text-3xl" />
                   </>
                 )}
@@ -1088,7 +963,7 @@ export default function Navbar() {
                     </span>
                   </div>
 
-                  {["All", "Limited"].map((item) => (
+                  {SALES_TYPES.map((item) => (
                     <div
                       key={item}
                       onClick={() => setTempSalesType(item)}
