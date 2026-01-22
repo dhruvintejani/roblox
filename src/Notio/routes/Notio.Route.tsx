@@ -8,6 +8,7 @@ import Signup from "../components/Sign_up";
 import ShortsExplore from "../components/ShortsExplore";
 import BlankLayout from "../layouts/BlankLayout";
 import ShortsViewerRoute from "./ShortsViewer.Route";
+import VideoCall from "../components/Video_Call";
 
 const HomeRoute = () => {
   return (
@@ -19,6 +20,7 @@ const HomeRoute = () => {
           <Route path="/subscription" element={<Subscription />} />
           <Route path="/my_chatbox" element={<My_Chatbox />} />
           <Route path="/shorts" element={<ShortsExplore />} />
+          <Route path="/videocall" element={<VideoCall />} />
         </Route>
 
         <Route element={<BlankLayout />}>

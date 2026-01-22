@@ -4,8 +4,9 @@ import Box from "@mui/material/Box";
 import Popover from "@mui/material/Popover";
 import type { ChatUser } from "../interface/IHome";
 import { dummyUsers } from "../../assets/data/Notio/dummydata";
+import { useThemeStore } from "../store/UseThemeStore";
 
-const nowTime = () =>
+export const latestTime = () =>
   new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
 const My_Chatbox: React.FC = () => {
@@ -16,6 +17,8 @@ const My_Chatbox: React.FC = () => {
   const [showEmoji, setShowEmoji] = useState(false);
   const [emoji, setEmoji] = useState<HTMLElement | null>(null);
   const [notification, setNotification] = useState<HTMLElement | null>(null);
+    const { theme } = useThemeStore();
+  
 
   const selectedUser = users.find((u) => u.id === selectedUserId)!;
 
@@ -34,7 +37,7 @@ const My_Chatbox: React.FC = () => {
               ...u,
               messages: [
                 ...u.messages,
-                { text: input, sender: "me", time: nowTime() },
+                { text: input, sender: "me", time: latestTime() },
               ],
             }
           : u
@@ -71,9 +74,9 @@ const My_Chatbox: React.FC = () => {
   };
 
   return (
-    <div className="w-full pt-4 pb-2 bg-gray-100 px-2 sm:px-4 md:px-6">
-      <div className="w-full max-w-[1600px] mx-auto h-[calc(100vh-7rem)] flex flex-col md:flex-row bg-gray-50">
-        <aside className="md:w-1/3 w-full border-b md:border-b-0 md:border-r border-gray-200 bg-gray-100 flex flex-col p-4">
+    <div className="w-full pt-4 pb-4 bg-gray-100 px-2 sm:px-4 md:px-6 dark:bg-neutral-950">
+      <div className="w-full max-w-[1600px] mx-auto h-[calc(100vh-7rem)] flex flex-col md:flex-row bg-gray-50 dark:bg-neutral-900">
+        <aside className="md:w-1/3 w-full border-b md:border-b-0 md:border-r dark:border-neutral-800 border-gray-200 bg-gray-100 dark:bg-neutral-950 flex flex-col p-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <img
@@ -81,7 +84,7 @@ const My_Chatbox: React.FC = () => {
                 className="w-10 h-10 rounded-full"
               />
               <div>
-                <p className="text-sm font-semibold text-gray-900">
+                <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Ralph hitman
                 </p>
                 <p className="text-xs text-gray-500">@ralph-hitman</p>
@@ -98,13 +101,13 @@ const My_Chatbox: React.FC = () => {
             </button>
           </div>
 
-          <div className="flex items-center gap-2 px-4 py-2 mb-3 bg-gray-200 rounded-full">
+          <div className="flex items-center gap-2 px-4 py-2 mb-3 bg-gray-200 dark:bg-neutral-800 rounded-full">
             <Icon icon="mdi:magnify" className="text-gray-500" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search"
-              className="bg-transparent text-sm w-full focus:outline-none"
+              className="bg-transparent text-sm w-full focus:outline-none dark:text-gray-100"
             />
           </div>
 
@@ -119,14 +122,16 @@ const My_Chatbox: React.FC = () => {
                   onClick={() => handleUserClick(user.id)}
                   className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer transition ${
                     user.id === selectedUserId
-                      ? "bg-white"
-                      : "hover:bg-gray-200"
+                      ? "bg-white dark:bg-neutral-800"
+                      : "hover:bg-gray-200 dark:hover:bg-neutral-800"
                   }`}
                 >
                   <img src={user.avatar} className="w-9 h-9 rounded-full" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{user.name}</p>
-                    <p className="text-xs text-gray-500 truncate">
+<p className="text-sm font-medium truncate text-gray-900 dark:text-gray-100">
+                      {user.name}
+                    </p>
+                                        <p className="text-xs text-gray-500 truncate">
                       {user.messages[user.messages.length - 1]?.text ||
                         "No messages"}
                     </p>
@@ -142,30 +147,25 @@ const My_Chatbox: React.FC = () => {
           </div>
         </aside>
 
-        <main className="flex-1 flex flex-col bg-gray-100">
-          <header className="px-4 sm:px-6 py-3 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+        <main className="flex-1 flex flex-col bg-gray-100 dark:bg-neutral-900">
+          <header className="px-4 sm:px-6 py-3 border-b border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img src={selectedUser.avatar} className="w-9 h-9 rounded-full" />
               <div>
-                <p className="font-semibold text-gray-900">
+                <p className="font-semibold text-gray-900 dark:text-gray-100">
                   {selectedUser.name}
                 </p>
                 <p className="text-xs text-gray-500">Conversation</p>
               </div>
             </div>
             <div className="flex gap-2 sm:gap-5 text-blue-500 cursor-pointer">
-              <Icon
-                icon="mdi:phone-outline"
-                className="w-6 sm:w-8 h-6 sm:h-8 bg-blue-100 rounded-2xl p-[4px] sm:p-[6px]"
-              />
-              <Icon
-                icon="mdi:video-outline"
-                className="w-6 sm:w-8 h-6 sm:h-8 bg-blue-100 rounded-2xl p-[4px] sm:p-[6px]"
-              />
-              <Icon
-                icon="mdi:dots-vertical"
-                className="w-6 sm:w-8 h-6 sm:h-8 bg-blue-100 rounded-2xl p-[4px] sm:p-[6px]"
-              />
+              {["phone-outline", "video-outline", "dots-vertical"].map((i) => (
+                <Icon
+                  key={i}
+                  icon={`mdi:${i}`}
+                  className="w-6 sm:w-8 h-6 sm:h-8 bg-blue-100 dark:bg-blue-900/30 rounded-2xl p-[4px] sm:p-[6px]"
+                />
+              ))}
             </div>
           </header>
 
@@ -188,7 +188,7 @@ const My_Chatbox: React.FC = () => {
                     className={`px-4 py-2 rounded-2xl text-sm ${
                       msg.sender === "me"
                         ? "bg-blue-500 text-white rounded-br-md"
-                        : "bg-white border border-gray-200 rounded-bl-md"
+                        : "bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-900 dark:text-gray-100 rounded-bl-md"
                     }`}
                   >
                     {msg.text}
@@ -201,7 +201,7 @@ const My_Chatbox: React.FC = () => {
             ))}
           </section>
 
-          <footer className="px-3 sm:px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center gap-3">
+          <footer className="px-3 sm:px-6 py-3 border-t border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900 flex items-center gap-3">
             <input
               type="file"
               id="attachment-input"
@@ -224,7 +224,7 @@ const My_Chatbox: React.FC = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               placeholder="Type a message"
-              className="flex-1 bg-transparent text-sm focus:outline-none"
+              className="flex-1 bg-transparent text-sm focus:outline-none text-gray-900 dark:text-gray-100"
             />
 
             <button
@@ -252,6 +252,13 @@ const My_Chatbox: React.FC = () => {
               onClose={() => setShowEmoji(false)}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               transformOrigin={{ vertical: "top", horizontal: "center" }}
+              PaperProps={{
+                sx: {
+                  backgroundColor:
+                    theme === "dark" ? "#0a0a0a" : "#ffffff",
+                  color: theme === "dark" ? "#ffffff" : "#000000",
+                },
+              }}
             >
               <div className="p-3 grid grid-cols-6 gap-2">
                 {["😀", "😂", "😍", "👍", "🎉", "😢"].map((emoji) => (
@@ -261,7 +268,7 @@ const My_Chatbox: React.FC = () => {
                       setInput((p) => p + emoji);
                       setShowEmoji(false);
                     }}
-                    className="text-xl hover:bg-gray-100 rounded"
+                    className="text-xl hover:bg-gray-100 dark:hover:bg-neutral-800 rounded"
                   >
                     {emoji}
                   </button>
@@ -276,11 +283,13 @@ const My_Chatbox: React.FC = () => {
         open={Boolean(notification)}
         anchorEl={notification}
         onClose={() => setNotification(null)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        // anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        // transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
           sx: {
-            mt: 1.5,
+            backgroundColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+            color: theme === "dark" ? "#ffffff" : "#000000",
+            mt: 2,
             borderRadius: "12px",
             boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
           },
@@ -300,12 +309,12 @@ const My_Chatbox: React.FC = () => {
               <div
                 key={idx}
                 onClick={() => handleNotificationClick(user.id)}
-                className="flex gap-3 p-3 cursor-pointer hover:bg-gray-100 rounded-lg transition"
+                className="flex gap-3 p-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg transition"
               >
                 <img src={user.avatar} className="w-8 h-8 rounded-full" />
                 <div className="min-w-0">
                   <p className="text-sm font-medium truncate">{user.name}</p>
-                  <p className="text-xs text-gray-600 truncate">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
                     {message.text}
                   </p>
                 </div>

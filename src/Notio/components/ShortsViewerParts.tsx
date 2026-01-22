@@ -7,9 +7,8 @@ export function formatCount(n: number) {
   if (n >= 1_000) return `${(n / 1_000).toFixed(n % 1_000 === 0 ? 0 : 1)}K`;
   return `${n}`;
 }
-export function cx(...parts: Array<string | false | null | undefined>) {
-  return parts.filter(Boolean).join(" ");
-}
+export const cx = (...s: Array<string | false | null | undefined>) => s.filter(Boolean).join(" ");
+
 export function uid(prefix = "id") {
   return `${prefix}_${Math.random()
     .toString(16)

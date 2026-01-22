@@ -1,4 +1,4 @@
-import type { ChatUser, Plan } from "../../../Notio/interface/IHome";
+import type { ChatUser, Messages, Plan } from "../../../Notio/interface/IHome";
 import type { Reel } from "../../../Notio/interface/IShorts";
 import image_1 from "../../images/Notio/n-1.jpg";
 import image_2 from "../../images/Notio/n-2.jpg";
@@ -18,8 +18,7 @@ export const mockReels: Reel[] = [
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
     thumbnail:
       "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    caption:
-      "Feeling the wind in my hair during this amazing ride! 🏍️",
+    caption: "Feeling the wind in my hair during this amazing ride! 🏍️",
     likes: 12500,
     comments: 342,
     shares: 189,
@@ -49,8 +48,7 @@ export const mockReels: Reel[] = [
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     thumbnail:
       "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    caption:
-      "Weekend vibes with friends! Always better together 👫",
+    caption: "Weekend vibes with friends! Always better together 👫",
     likes: 8900,
     comments: 210,
     shares: 95,
@@ -80,8 +78,7 @@ export const mockReels: Reel[] = [
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
     thumbnail:
       "https://images.unsplash.com/photo-1547447134-cd3f5c716030?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    caption:
-      "Street skating sesh with the crew! 🛹",
+    caption: "Street skating sesh with the crew! 🛹",
     likes: 25400,
     comments: 890,
     shares: 456,
@@ -111,8 +108,7 @@ export const mockReels: Reel[] = [
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     thumbnail:
       "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    caption:
-      "Homemade pasta from scratch using my grandma's recipe! 🍝",
+    caption: "Homemade pasta from scratch using my grandma's recipe! 🍝",
     likes: 15600,
     comments: 432,
     shares: 267,
@@ -142,8 +138,7 @@ export const mockReels: Reel[] = [
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     thumbnail:
       "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    caption:
-      "Morning workout routine to start the day right! 💪",
+    caption: "Morning workout routine to start the day right! 💪",
     likes: 23400,
     comments: 650,
     shares: 345,
@@ -173,8 +168,7 @@ export const mockReels: Reel[] = [
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
     thumbnail:
       "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    caption:
-      "Creative coding session - building something amazing! 💻",
+    caption: "Creative coding session - building something amazing! 💻",
     likes: 8900,
     comments: 230,
     shares: 145,
@@ -453,8 +447,54 @@ export const dummyUsers: ChatUser[] = [
 ];
 
 export const aiOptions = [
-  { name: "Gemini 3 Pro", img: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png" },
-  { name: "GPT-4", img: "https://cdn-icons-png.flaticon.com/512/12222/12222560.png" },
-  { name: "Claude", img: "https://cdn-icons-png.flaticon.com/512/5968/5968705.png" },
-  { name: "Custom AI", img: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png" },
+  {
+    name: "Gemini 3 Pro",
+    img: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png",
+  },
+  {
+    name: "GPT-4",
+    img: "https://cdn-icons-png.flaticon.com/512/12222/12222560.png",
+  },
+  {
+    name: "Claude",
+    img: "https://cdn-icons-png.flaticon.com/512/5968/5968705.png",
+  },
+  {
+    name: "Custom AI",
+    img: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png",
+  },
 ];
+
+export const initialMessages: Messages[] = [
+  {
+    id: "1",
+    sender: "them",
+    text: "Hello! 👋",
+    time: "09:44 AM",
+    avatar: "https://i.pravatar.cc/40?img=32",
+  },
+  {
+    id: "2",
+    sender: "me",
+    text: "Hello! How can I help you?",
+    time: "09:44 AM",
+  },
+  {
+    id: "3",
+    sender: "them",
+    text: "I have a few questions about cardiology services. Could you help me with that?",
+    time: "09:45 AM",
+    avatar: "https://i.pravatar.cc/40?img=32",
+  },
+  {
+    id: "4",
+    sender: "me",
+    text: "Of course, I'd be happy to help. What would you like to know?",
+    time: "09:45 AM",
+  },
+];
+
+export const doctorPlaceholder =
+  "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1200&auto=format&fit=crop";
+export const patientPlaceholder =
+  "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg";

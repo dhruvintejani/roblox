@@ -7,26 +7,26 @@ const Subscription: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   return (
-    <section className="bg-gray-200 px-4 py-8 sm:py-12 flex justify-center">
-      <div className="w-full max-w-6xl bg-white rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.05)] px-4 sm:px-6 md:px-10 py-8 sm:py-10">
+    <section className="bg-gray-200 dark:bg-neutral-950 px-4 py-8 sm:py-12 flex justify-center">
+      <div className="w-full max-w-6xl bg-white dark:bg-neutral-900 rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.05)] px-4 sm:px-6 md:px-10 py-8 sm:py-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between mb-10">
           <div className="text-center sm:text-left">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
               Choose your plan
             </h2>
-            <p className="mt-2 text-sm sm:text-base font-semibold text-gray-500">
+            <p className="mt-2 text-sm sm:text-base font-semibold text-gray-500 dark:text-gray-400">
               14 days free trial · Plans can be upgraded in the future.
             </p>
           </div>
 
           <div className="flex justify-center sm:justify-end">
-            <div className="bg-gray-200 rounded-full p-1 flex w-full max-w-xs sm:w-auto">
+            <div className="bg-gray-200 dark:bg-neutral-800 rounded-full p-1 flex w-full max-w-xs sm:w-auto">
               <button
                 onClick={() => setPlan("monthly")}
                 className={`flex-1 px-4 sm:px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   plan === "monthly"
                     ? "bg-green-700 text-white"
-                    : "text-gray-700"
+                    : "text-gray-700 dark:text-gray-300"
                 }`}
               >
                 Monthly
@@ -36,7 +36,7 @@ const Subscription: React.FC = () => {
                 className={`flex-1 px-4 sm:px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   plan === "yearly"
                     ? "bg-green-700 text-white"
-                    : "text-gray-700"
+                    : "text-gray-700 dark:text-gray-300"
                 }`}
               >
                 Yearly
@@ -116,7 +116,12 @@ const PlanCard: React.FC<{
       shadow-[0_20px_40px_rgba(0,0,0,0.05)]
       flex flex-col justify-between
       transition-transform duration-300 ease-out hover:scale-[1.03]
-      border ${selected ? "border-green-700" : "border-[#E6ECE8]"} bg-white`}
+      border ${
+        selected
+          ? "border-green-700"
+          : "border-[#E6ECE8] dark:border-neutral-700"
+      }
+      bg-white dark:bg-neutral-900`}
     >
       <div>
         <div className="flex items-center gap-2 mb-4">
@@ -127,7 +132,7 @@ const PlanCard: React.FC<{
         </div>
 
         <div className="mb-5">
-          <span className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <span className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100">
             {plan.price}
           </span>
           <span className="text-sm sm:text-md font-bold text-gray-400">
@@ -136,7 +141,7 @@ const PlanCard: React.FC<{
           </span>
         </div>
 
-        <ul className="space-y-3 text-sm sm:text-base text-gray-700">
+        <ul className="space-y-3 text-sm sm:text-base text-gray-700 dark:text-gray-300">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-start gap-2">
               <span className="text-yellow-500 mt-0.5">✦</span>
@@ -147,7 +152,7 @@ const PlanCard: React.FC<{
       </div>
 
       <button
-        className={`mt-6 sm:mt-8 w-full py-3 rounded-xl font-medium transition-all duration-300
+        className={`mt-6 sm:mt-8 w-full py-3 rounded-xl font-medium
         ${
           selected
             ? "bg-green-700 text-white hover:bg-green-800"

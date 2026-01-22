@@ -6,11 +6,13 @@ const Home = () => {
   const [mode, setMode] = useState(false);
 
   return (
-    <div className="w-full px-[75px]">
+    <div className="w-full px-[75px] bg-white dark:bg-neutral-950">
       <div>
         {mode && (
           <div
-            className={`flex fixed z-50 w-[90.5%] justify-center gap-6 p-4 bg-black text-white font-semibold animate-slideDown`}
+            className="flex fixed z-50 w-[90.5%] justify-center gap-6 p-4
+                       bg-black dark:bg-neutral-900
+                       text-white font-semibold animate-slideDown"
           >
             <div
               className="flex gap-6 cursor-pointer"
@@ -25,10 +27,14 @@ const Home = () => {
             </div>
           </div>
         )}
+
         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4">
           {!mode && (
             <p
-              className="flex mt-2 justify-between bg-black bg-opacity-40 p-4 hover:bg-opacity-100 cursor-pointer fixed text-white font-bold z-30"
+              className="flex mt-2 justify-between fixed z-30 p-4 cursor-pointer
+                         bg-black/40 dark:bg-neutral-800/70
+                         hover:bg-black dark:hover:bg-neutral-800
+                         text-white font-bold"
               onClick={() => setMode(true)}
             >
               FILTERS
@@ -37,7 +43,7 @@ const Home = () => {
 
           {images.map((item, index) => (
             <div key={index} className="relative pb-6 group cursor-pointer">
-              <Link to={"/products"}>
+              <Link to="/products">
                 <img
                   src={item.src}
                   alt=""
@@ -45,8 +51,16 @@ const Home = () => {
                     item.height ? "h-[715px]" : ""
                   }`}
                 />
-                <div className="absolute inset-0 hover:animate-slideDown animate-slideUp bg-gray-400/20 mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-end text-black text-center">
-                  <div className="bg-gray-400/40 w-full">
+
+                <div
+                  className="absolute inset-0 mb-6 opacity-0 group-hover:opacity-100
+                             transition-opacity duration-300
+                             hover:animate-slideDown animate-slideUp
+                             bg-gray-400/20 dark:bg-black/40
+                             flex flex-col items-center justify-end
+                             text-black dark:text-white text-center"
+                >
+                  <div className="bg-gray-400/40 dark:bg-black/60 w-full">
                     <h1 className="text-[35px] font-bold tracking-wide">
                       {item.title}
                     </h1>
@@ -61,8 +75,13 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex text-gray-400 hover:text-black justify-center p-8 bg-gray-100 mb-5">
-        <h3 className="font-bold">LOAD MORE</h3>
+      <div
+        className="flex justify-center p-8 mb-5 font-bold cursor-pointer
+                   bg-gray-100 dark:bg-neutral-900
+                   text-gray-500 dark:text-gray-400
+                   hover:text-black dark:hover:text-white"
+      >
+        LOAD MORE
       </div>
     </div>
   );
