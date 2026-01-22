@@ -1,0 +1,87 @@
+@layer utilities {
+  /* Panel slide (Chat, Side panels) */
+  .animate-panel-in {
+    animation: panel-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-panel-out {
+    animation: panel-out 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* PiP ↔ Main subtle morph */
+  .animate-pip-morph {
+    animation: pip-morph 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Fade + scale for overlays */
+  .animate-fade-scale-in {
+    animation: fade-scale-in 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-fade-scale-out {
+    animation: fade-scale-out 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes panel-out {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+      filter: blur(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(12px);
+      filter: blur(6px);
+    }
+  }
+
+  @keyframes pip-morph {
+    from {
+      transform: scale(0.96);
+      opacity: 0.85;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes fade-scale-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.98);
+      filter: blur(4px);
+    }
+  }
+}
